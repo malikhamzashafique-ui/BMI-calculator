@@ -66,8 +66,6 @@ BMI-Calculator/
 ├── index.html
 ├── style.css
 ├── script.js
-├── assets/
-│   └── screenshots/
 └── README.md
 ```
 
