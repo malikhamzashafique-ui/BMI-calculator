@@ -33,7 +33,7 @@ This project calculates BMI using user height and weight inputs and displays the
 
 # 📐 BMI Formula
 
-:contentReference[oaicite:0]{index=0}
+Bmi = weightInKg / (heightInMeters * heightInMeters)
 
 ---
 
