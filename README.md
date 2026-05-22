@@ -82,7 +82,7 @@ git clone https://github.com/malikhamzashafique-ui/BMI-calculator.git
 ### 2️⃣ Open Project Folder
 
 ```bash
-cd bmi-calculator
+cd BMI-calculator
 ```
 
 ### 3️⃣ Run the Project
