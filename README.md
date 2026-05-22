@@ -96,10 +96,14 @@ Open `index.html` in your browser.
 # 📷 Screenshots
 
 ## Home Page
-_Add screenshot here_
+<img width="483" height="509" alt="image" src="https://github.com/user-attachments/assets/799a4453-adcf-4a88-8edc-e251e0324001" />
+<img width="526" height="331" alt="image" src="https://github.com/user-attachments/assets/9b30db0f-3a51-40e6-a55a-727addaf1694" />
+
 
 ## BMI Result
-_Add screenshot here_
+<img width="569" height="623" alt="image" src="https://github.com/user-attachments/assets/623e828b-8d20-4921-a6f5-52c61bf470bd" />
+<img width="551" height="261" alt="image" src="https://github.com/user-attachments/assets/97929a59-0872-4c83-a9da-48406f00fffa" />
+
 
 ---
 
