@@ -1,0 +1,938 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    min-height: 100vh;
+    background: #f5f6f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    overflow-y: auto;
+}
+
+.background-overlay {
+    display: none;
+}
+
+.container {
+    width: 100%;
+    max-width: 580px;
+    animation: fadeInUp 0.8s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.calculator-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 40px 35px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #e8eaed;
+}
+
+.calculator-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #0052cc, #4285f4);
+}
+
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #0052cc;
+    margin-bottom: 8px;
+    letter-spacing: -0.3px;
+    animation: slideIn 0.8s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.subtitle {
+    color: #5f6368;
+    font-size: 0.9rem;
+    font-weight: 400;
+    animation: slideIn 0.8s ease-out 0.2s both;
+}
+
+
+.calculator-form {
+    display: grid;
+    gap: 24px;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.input-group label {
+    font-weight: 500;
+    color: #202124;
+    font-size: 0.85rem;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.input-wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+.input-wrapper input {
+    flex: 1;
+    padding: 12px 14px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+    background: #fff;
+    color: #202124;
+    font-weight: 400;
+}
+
+.input-wrapper input::placeholder {
+    color: #9aa0a6;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: #0052cc;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(66, 133, 244, 0.3);
+}
+
+.input-wrapper select {
+    padding: 12px 12px;
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 90px;
+    color: #202124;
+    font-weight: 400;
+}
+
+.input-wrapper select option {
+    background: #fff;
+    color: #202124;
+}
+
+.input-wrapper select:focus {
+    outline: none;
+    border-color: #0052cc;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(66, 133, 244, 0.3);
+}
+
+.calculate-btn {
+    background: #0052cc;
+    color: #fff;
+    border: none;
+    padding: 14px 40px;
+    border-radius: 4px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    position: relative;
+    overflow: hidden;
+    touch-action: manipulation;
+    -webkit-user-select: none;
+    user-select: none;
+    text-transform: none;
+    letter-spacing: 0;
+    width: 100%;
+}
+
+.calculate-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    transition: left 0.3s ease;
+    z-index: 0;
+}
+
+.calculate-btn:active::before {
+    left: 100%;
+}
+
+.calculate-btn:active {
+    transform: scale(0.98);
+}
+
+.calculate-btn span, .calculate-btn svg {
+    position: relative;
+    z-index: 1;
+}
+
+.result-section {
+    background: #f8f9fa;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    padding: 30px 25px;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.bmi-value {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.bmi-value .label {
+    font-size: 0.75rem;
+    color: #5f6368;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.bmi-value .value {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #0052cc;
+    animation: scaleIn 0.5s ease-out;
+    line-height: 1;
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.bmi-category {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.category-badge {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #fff;
+    animation: fadeIn 0.5s ease-out;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+.category-underweight {
+    background: #4285f4;
+}
+
+.category-normal {
+    background: #34a853;
+}
+
+.category-overweight {
+    background: #fbbc04;
+    color: #202124;
+}
+
+.category-obese {
+    background: #ea4335;
+}
+
+.bmi-description {
+    text-align: center;
+    color: #5f6368;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    line-height: 1.6;
+    animation: fadeIn 0.6s ease-out 0.2s both;
+    padding: 0 10px;
+}
+
+.bmi-scale {
+    margin-top: 20px;
+}
+
+.scale-bar {
+    height: 10px;
+    background: linear-gradient(to right,
+        #4285f4 0%,
+        #4285f4 25%,
+        #34a853 25%,
+        #34a853 50%,
+        #fbbc04 50%,
+        #fbbc04 75%,
+        #ea4335 75%,
+        #ea4335 100%);
+    border-radius: 4px;
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.scale-indicator {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background: #0052cc;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    50% {
+        box-shadow: 0 2px 12px rgba(0, 82, 204, 0.3);
+    }
+}
+
+.scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.65rem;
+    color: #5f6368;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.info-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.info-card {
+    background: #f8f9fa;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    padding: 18px 14px;
+    text-align: center;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    touch-action: manipulation;
+}
+
+.info-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(66, 133, 244, 0.08), transparent);
+    transition: left 0.3s;
+    z-index: 0;
+}
+
+.info-card:active::before {
+    left: 100%;
+}
+
+.info-card:active {
+    transform: scale(0.98);
+    border-color: #0052cc;
+    background: #f1f7ff;
+}
+
+.info-icon {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+}
+
+.info-card h3 {
+    font-size: 0.85rem;
+    color: #202124;
+    margin-bottom: 4px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
+.info-card p {
+    color: #5f6368;
+    font-size: 0.8rem;
+    font-weight: 400;
+    position: relative;
+    z-index: 1;
+}
+
+.chart-container {
+    background: #f8f9fa;
+    border: 1px solid #dadce0;
+    border-radius: 8px;
+    padding: 25px 20px;
+    margin-top: 25px;
+    position: relative;
+}
+
+.chart-title {
+    font-size: 0.95rem;
+    color: #202124;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
+    text-transform: none;
+    letter-spacing: 0;
+}
+
+#bmiChart {
+    max-width: 100%;
+    height: auto;
+    min-height: 250px;
+}
+
+/* Small tablets (481px - 768px) */
+@media (min-width: 481px) {
+    .container {
+        max-width: 700px;
+    }
+
+    .calculator-card {
+        padding: 45px 40px;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 0.95rem;
+    }
+
+    .bmi-value .value {
+        font-size: 4.2rem;
+    }
+
+    .chart-container {
+        padding: 28px 22px;
+    }
+
+    .calculate-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 82, 204, 0.25);
+        background: #003d9f;
+    }
+}
+
+/* Medium tablets (769px - 1024px) */
+@media (min-width: 769px) {
+    body {
+        padding: 30px;
+    }
+
+    .container {
+        max-width: 750px;
+    }
+
+    .calculator-card {
+        padding: 50px 45px;
+        border-radius: 12px;
+    }
+
+    .header {
+        margin-bottom: 45px;
+    }
+
+    .header h1 {
+        font-size: 2.2rem;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .calculator-form {
+        gap: 28px;
+    }
+
+    .input-wrapper {
+        gap: 12px;
+    }
+
+    .input-wrapper input,
+    .input-wrapper select {
+        padding: 13px 16px;
+        font-size: 1.05rem;
+    }
+
+    .input-wrapper select {
+        min-width: 110px;
+    }
+
+    .calculate-btn {
+        padding: 16px 45px;
+        font-size: 1rem;
+    }
+
+    .result-section {
+        padding: 35px 30px;
+        margin-bottom: 35px;
+    }
+
+    .bmi-value .value {
+        font-size: 4.5rem;
+    }
+
+    .category-badge {
+        padding: 11px 26px;
+        font-size: 0.88rem;
+    }
+
+    .bmi-description {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        margin-bottom: 25px;
+    }
+
+    .info-cards {
+        gap: 16px;
+    }
+
+    .info-card {
+        padding: 20px 16px;
+    }
+
+    .info-icon {
+        font-size: 2.1rem;
+    }
+
+    .info-card h3 {
+        font-size: 0.88rem;
+    }
+
+    .info-card p {
+        font-size: 0.82rem;
+    }
+
+    .chart-container {
+        padding: 30px 25px;
+    }
+
+    .chart-title {
+        font-size: 1rem;
+        margin-bottom: 22px;
+    }
+}
+
+/* Large desktops (1025px+) */
+@media (min-width: 1025px) {
+    body {
+        padding: 40px;
+    }
+
+    .container {
+        max-width: 850px;
+    }
+
+    .calculator-card {
+        padding: 55px 50px;
+        border-radius: 12px;
+    }
+
+    .header {
+        margin-bottom: 50px;
+    }
+
+    .header h1 {
+        font-size: 2.4rem;
+        margin-bottom: 12px;
+    }
+
+    .subtitle {
+        font-size: 1.05rem;
+    }
+
+    .calculator-form {
+        gap: 30px;
+    }
+
+    .input-group label {
+        font-size: 0.88rem;
+    }
+
+    .input-wrapper {
+        gap: 14px;
+    }
+
+    .input-wrapper input,
+    .input-wrapper select {
+        padding: 14px 18px;
+        font-size: 1.1rem;
+        border-radius: 6px;
+    }
+
+    .input-wrapper input:focus {
+        box-shadow: 0 2px 8px rgba(66, 133, 244, 0.4);
+    }
+
+    .input-wrapper select {
+        min-width: 130px;
+        font-size: 1rem;
+    }
+
+    .calculate-btn {
+        padding: 16px 50px;
+        font-size: 1.05rem;
+        gap: 14px;
+        border-radius: 6px;
+    }
+
+    .calculate-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0, 82, 204, 0.35);
+        background: #003d9f;
+    }
+
+    .calculate-btn svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .result-section {
+        padding: 40px 35px;
+        margin-bottom: 40px;
+        border-radius: 10px;
+    }
+
+    .bmi-value .value {
+        font-size: 5rem;
+    }
+
+    .bmi-value .label {
+        font-size: 0.78rem;
+    }
+
+    .category-badge {
+        padding: 12px 28px;
+        font-size: 0.9rem;
+    }
+
+    .bmi-description {
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 28px;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .scale-bar {
+        height: 11px;
+        border-radius: 6px;
+    }
+
+    .scale-indicator {
+        width: 26px;
+        height: 26px;
+        border: 3px solid #fff;
+    }
+
+    .scale-labels {
+        font-size: 0.7rem;
+        margin-top: 16px;
+    }
+
+    .info-cards {
+        gap: 18px;
+        margin-top: 15px;
+    }
+
+    .info-card {
+        padding: 22px 18px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .info-card:hover {
+        transform: translateY(-4px);
+        border-color: #0052cc;
+        background: #f1f7ff;
+        box-shadow: 0 4px 12px rgba(0, 82, 204, 0.15);
+    }
+
+    .info-icon {
+        font-size: 2.3rem;
+        margin-bottom: 10px;
+    }
+
+    .info-card h3 {
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+    }
+
+    .info-card p {
+        font-size: 0.85rem;
+    }
+
+    .chart-container {
+        padding: 35px 30px;
+    }
+
+    .chart-title {
+        font-size: 1.05rem;
+        margin-bottom: 25px;
+    }
+}
+
+/* Extra small devices (less than 360px) */
+@media (max-width: 359px) {
+    body {
+        padding: 12px;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .calculator-card {
+        padding: 25px 18px;
+        border-radius: 6px;
+    }
+
+    .header {
+        margin-bottom: 28px;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+        margin-bottom: 6px;
+    }
+
+    .subtitle {
+        font-size: 0.8rem;
+    }
+
+    .calculator-form {
+        gap: 18px;
+    }
+
+    .input-group label {
+        font-size: 0.75rem;
+    }
+
+    .input-wrapper {
+        gap: 6px;
+        flex-direction: column;
+    }
+
+    .input-wrapper input,
+    .input-wrapper select {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+        width: 100%;
+    }
+
+    .input-wrapper select {
+        min-width: auto;
+    }
+
+    .calculate-btn {
+        padding: 12px 18px;
+        font-size: 0.88rem;
+        gap: 8px;
+    }
+
+    .calculate-btn svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    .result-section {
+        padding: 20px 14px;
+        margin-bottom: 20px;
+    }
+
+    .bmi-value .value {
+        font-size: 3rem;
+    }
+
+    .bmi-value .label {
+        font-size: 0.7rem;
+    }
+
+    .category-badge {
+        padding: 8px 18px;
+        font-size: 0.8rem;
+    }
+
+    .bmi-description {
+        font-size: 0.8rem;
+        margin-bottom: 16px;
+        padding: 0 4px;
+    }
+
+    .scale-labels {
+        font-size: 0.6rem;
+    }
+
+    .info-cards {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .info-card {
+        padding: 12px 10px;
+    }
+
+    .info-icon {
+        font-size: 1.5rem;
+        margin-bottom: 4px;
+    }
+
+    .info-card h3 {
+        font-size: 0.8rem;
+    }
+
+    .info-card p {
+        font-size: 0.75rem;
+    }
+
+    .chart-container {
+        padding: 18px 12px;
+    }
+
+    .chart-title {
+        font-size: 0.85rem;
+        margin-bottom: 16px;
+    }
+}
+
+    .info-card:hover .info-icon {
+        filter: grayscale(0%);
+    }
+}
+
+/* Desktop screens */
+@media (min-width: 769px) {
+    .container {
+        max-width: 900px;
+    }
+
+    .calculator-card {
+        padding: 50px 40px;
+    }
+
+    .header h1 {
+        font-size: 3rem;
+    }
+
+    body::before {
+        background-size: 50px 50px;
+    }
+
+    @keyframes moveGrid {
+        0% {
+            transform: translate(0, 0);
+        }
+        100% {
+            transform: translate(50px, 50px);
+        }
+    }
+}
+
+/* Small mobile optimization */
+@media (max-width: 360px) {
+    .calculator-card {
+        padding: 25px 15px;
+    }
+
+    .header h1 {
+        font-size: 1.75rem;
+    }
+
+    .bmi-value .value {
+        font-size: 3rem;
+    }
+
+    .scale-labels {
+        font-size: 0.65rem;
+    }
+
+    .info-card {
+        padding: 15px 10px;
+    }
+
+    .info-icon {
+        font-size: 1.75rem;
+    }
+}
+
+/* Made with Bob */

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator - Fitness Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    
+    <div class="container">
+        <div class="calculator-card">
+            <div class="header">
+                <h1>BMI Calculator</h1>
+                <p class="subtitle">Calculate Your Body Mass Index</p>
+            </div>
+
+            <div class="calculator-form">
+                <div class="input-group">
+                    <label for="height">Height</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="height" placeholder="Enter height" step="0.01" min="0">
+                        <select id="height-unit">
+                            <option value="cm">cm</option>
+                            <option value="m">m</option>
+                            <option value="ft">ft</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="weight">Weight</label>
+                    <div class="input-wrapper">
+                        <input type="number" id="weight" placeholder="Enter weight" step="0.1" min="0">
+                        <select id="weight-unit">
+                            <option value="kg">kg</option>
+                            <option value="lbs">lbs</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="calculate-btn" onclick="calculateBMI()">
+                    <span>Calculate</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M4 10h12m-6-6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="result-section" id="result-section">
+                <div class="bmi-value">
+                    <span class="label">Your BMI</span>
+                    <span class="value" id="bmi-value">--</span>
+                </div>
+                
+                <div class="bmi-category" id="bmi-category">
+                    <span class="category-badge">Calculate to see result</span>
+                </div>
+
+                <div class="bmi-description" id="bmi-description">
+                    Enter your height and weight to calculate your BMI
+                </div>
+
+                <div class="bmi-scale">
+                    <div class="scale-bar">
+                        <div class="scale-indicator" id="scale-indicator"></div>
+                    </div>
+                    <div class="scale-labels">
+                        <span>Underweight</span>
+                        <span>Normal</span>
+                        <span>Overweight</span>
+                        <span>Obese</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">BMI Categories</h3>
+                <canvas id="bmiChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
